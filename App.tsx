@@ -7,7 +7,7 @@
  *
  * @format
  */
-
+// import App from './src/navigation';
 import React, {useEffect, useState, type PropsWithChildren} from 'react';
 import {
   SafeAreaView,
@@ -32,17 +32,9 @@ const Section: React.FC<
     title: string;
   }>
 > = ({children, title}) => {
-  const [loading, setLoading] = useState(true);
   const [data, setData] = useState('');
 
   const isDarkMode = useColorScheme() === 'dark';
-  useEffect(() => {
-    fetch('https://reactnative.dev/movies.json')
-      .then(response => response.json())
-      .then(json => setData(json?.title))
-      .catch(error => console.error(error))
-      .finally(() => setLoading(true));
-  }, []);
 
   return (
     <View style={styles.sectionContainer}>
@@ -74,10 +66,25 @@ const Section: React.FC<
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const [loading, setLoading] = useState(true);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  console.log('ddd fff ggg');
+
+  useEffect(() => {
+    fetch('https://reactnative.dev/movies.json')
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        console.log('json json:', json);
+      })
+      .catch(error => console.error(error))
+      .finally(() => setLoading(true));
+  }, []);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -91,8 +98,8 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit 2 <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+            Edit 444 <Text style={styles.highlight}>App.tsx</Text> to change
+            this screen and then come back to see your edits.
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
