@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Text, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -7,23 +6,13 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // react-native-vector-icons/Ionicons otherwise.
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-// (...)
+import HomeScreen from '../screens/HomeScreen';
+import MeScreen from '../screens/MeScreen';
 
-function HomeScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
+const NavigationRoute = {
+  Me: 'ME',
+  Home: 'Home',
+};
 
 const Tab = createBottomTabNavigator();
 
@@ -34,15 +23,12 @@ export default function App() {
         screenOptions={({route, navigation}) => ({
           tabBarIcon: ({focused, color, size}) => {
             let iconName;
-            console.log('route:', route);
-            console.log('focused：', focused);
-            console.log('color:', color);
-            if (route.name === 'Home') {
+            if (route.name === NavigationRoute.Home) {
               iconName = focused
                 ? 'ios-information-circle'
                 : 'ios-information-circle-outline';
-            } else if (route.name === 'Settings') {
-              iconName = focused ? 'ios-list-box' : 'ios-list';
+            } else if (route.name === NavigationRoute.Me) {
+              iconName = focused ? 'person-circle' : 'person-circle-outline';
             }
 
             // You can return any component that you like here!
@@ -50,16 +36,16 @@ export default function App() {
               <Ionicons name={iconName as string} size={size} color={color} />
             );
           },
-          tabBarActiveBackgroundColor: 'blue',
+          // tabBarActiveBackgroundColor: 'blue',
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
         })}>
         <Tab.Screen
-          name="Home"
+          name={NavigationRoute.Home}
           component={HomeScreen}
           options={{tabBarBadge: 3}}
         />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name={NavigationRoute.Me} component={MeScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
